@@ -1,5 +1,5 @@
-import NextApp from 'next/app'
 import Head from 'next/head'
+import { useEffect } from 'react';
 
 function initFacebookPixel() {
     (function (f, b, e, v, n, t, s) {
@@ -25,24 +25,22 @@ function initFacebookPixel() {
         "script",
         "https://connect.facebook.net/en_US/fbevents.js",
     );
+
+    // ... etc
 }
 
-export default class App extends NextApp {
-    componentDidMount() {
+export default function App({ Component, pageProps  }) {
+    useEffect(() => {
         initFacebookPixel()
-    }
+    }, [])
 
-    render() {
-        const { Component, pageProps  } = this.props
+    return (
+        <>
+            <Head>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.0.0-beta-149b420f6-20211119/umd/react.production.min.js" />
+            </Head>
 
-        return (
-            <>
-                <Head>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.0.0-beta-149b420f6-20211119/umd/react.production.min.js" />
-                </Head>
-
-                <Component {...pageProps}/>
-            </>
-        )
-    }
+            <Component {...pageProps}/>
+        </>
+    )
 }
